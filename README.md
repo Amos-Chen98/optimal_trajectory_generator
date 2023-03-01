@@ -3,6 +3,10 @@
 
 This is a lightweight Python implementation of a trajectory generator. Set some waypoints in RViz through a few clicks, and it will generate a minimum jerk trajectory in milliseconds!
 
+![ezgif.com-video-to-gif](https://raw.githubusercontent.com/Amos-Chen98/Image_bed/main/2023/202303020006084.gif)
+
+![Untitled](https://raw.githubusercontent.com/Amos-Chen98/Image_bed/main/2023/202303020005954.png)
+
 ## Usage
 
 ### 1. Install
