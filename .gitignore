@@ -1,6 +1,7 @@
-devel/
+git@github.com:Amos-Chen98/drone_ws.gitdevel/
 logs/
 build/
+devel/
 bin/
 lib/
 msg_gen/
@@ -33,7 +34,7 @@ devel_isolated/
 CMakeLists.txt.user
 
 srv/_*.py
-*.pcd
+# *.pcd
 *.pyc
 qtcreator-*
 *.user
@@ -49,3 +50,7 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
+.catkin_tools
+
+# Editor
+.vscode
