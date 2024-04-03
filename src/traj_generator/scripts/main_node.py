@@ -1,19 +1,19 @@
 '''
 Author: Yicheng Chen (yicheng-chen@outlook.com)
-LastEditTime: 2023-03-01 23:15:13
+LastEditTime: 2024-04-03 15:58:19
 '''
 import os
 import sys
 current_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, current_path)
-from visualization_msgs.msg import MarkerArray
-import time
-from traj_planner import MinJerkPlanner
-from geometry_msgs.msg import PoseStamped
-import numpy as np
-import rospy
-from visualizer import Visualizer
 from matplotlib import pyplot as plt
+from visualizer import Visualizer
+import rospy
+import numpy as np
+from geometry_msgs.msg import PoseStamped
+from traj_planner import MinJerkPlanner
+import time
+from visualization_msgs.msg import MarkerArray
 
 
 class TrajGenerator():
@@ -100,29 +100,42 @@ class TrajGenerator():
         vel = self.planner.get_vel_array()
         acc = self.planner.get_acc_array()
         jer = self.planner.get_jer_array()
+        snap = self.planner.get_snap_array()
 
         # get the norm of vel, acc and jer
         vel_norm = np.linalg.norm(vel, axis=1)
         acc_norm = np.linalg.norm(acc, axis=1)
         jer_norm = np.linalg.norm(jer, axis=1)
+        snap_norm = np.linalg.norm(snap, axis=1)
 
-        plt.figure("Vel, Acc, Jerk by axis")
-        plt.plot(t_samples, vel[:, 0], label='Vel_x')
-        plt.plot(t_samples, vel[:, 1], label='Vel_y')
-        plt.plot(t_samples, acc[:, 0], label='Acc_x')
-        plt.plot(t_samples, acc[:, 1], label='Acc_y')
-        plt.plot(t_samples, jer[:, 0], label='Jerk_x')
-        plt.plot(t_samples, jer[:, 1], label='Jerk_y')
+        plt.figure("X axis states")
+        plt.plot(t_samples, vel[:, 0], label='Vel_x ($m\cdot s^{-1}$)')
+        plt.plot(t_samples, acc[:, 0], label='Acc_x ($m\cdot s^{-2}$)')
+        plt.plot(t_samples, jer[:, 0], label='Jerk_x ($m\cdot s^{-3}$)')
+        plt.plot(t_samples, snap[:, 0], label='Snap_x ($m\cdot s^{-4}$)')
         plt.xlabel('t/s')
+        plt.ylabel('Value')
         plt.legend()
         plt.grid()
 
-        plt.figure("Vel, Acc, Jerk magnitude")
-        plt.plot(t_samples, vel_norm, label='Vel')
-        plt.plot(t_samples, acc_norm, label='Acc')
-        plt.plot(t_samples, jer_norm, label='Jerk')
-        plt.vlines(t_cum_array, 0, np.max(vel_norm))  # mark the int_wpts
+        plt.figure("Y axis states")
+        plt.plot(t_samples, vel[:, 1], label='Vel_y ($m\cdot s^{-1}$)')
+        plt.plot(t_samples, acc[:, 1], label='Acc_y ($m\cdot s^{-2}$)')
+        plt.plot(t_samples, jer[:, 1], label='Jerk_y ($m\cdot s^{-3}$)')
+        plt.plot(t_samples, snap[:, 1], label='Snap_y ($m\cdot s^{-4}$)')
         plt.xlabel('t/s')
+        plt.ylabel('Value')
+        plt.legend()
+        plt.grid()
+
+        plt.figure("States norm")
+        plt.plot(t_samples, vel_norm, label='Vel ($m\cdot s^{-1}$)')
+        plt.plot(t_samples, acc_norm, label='Acc ($m\cdot s^{-2}$)')
+        plt.plot(t_samples, jer_norm, label='Jerk ($m\cdot s^{-3}$)')
+        plt.plot(t_samples, snap_norm, label='Snap ($m\cdot s^{-4}$)')
+        # plt.vlines(t_cum_array, 0, np.max(vel_norm))  # mark the int_wpts
+        plt.xlabel('t/s')
+        plt.ylabel('Value')
         plt.legend()
         plt.grid()
 

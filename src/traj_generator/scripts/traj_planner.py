@@ -221,6 +221,30 @@ class MinJerkPlanner():
         beta = np.array([0, 0, 0, 6, 24*T, 60*T**2])
 
         return np.dot(c_block.T, np.array([beta]).T).T
+    
+    def get_snap(self, t):
+        '''
+        get snap at time t
+        return a (1,D) array
+        '''
+        if t > sum(self.ts):
+            return self.get_snap(sum(self.ts))
+
+        if self.coeffs == []:
+            self.get_coeffs(self.int_wpts, self.ts)
+
+        # Locate piece index
+        piece_idx = 0
+        while sum(self.ts[:piece_idx+1]) < t:
+            piece_idx += 1
+
+        T = t - sum(self.ts[:piece_idx])
+
+        c_block = self.coeffs[2*self.s*piece_idx:2*self.s*(piece_idx+1), :]
+
+        beta = np.array([0, 0, 0, 0, 24, 120*T])
+
+        return np.dot(c_block.T, np.array([beta]).T).T
 
     def get_pos_array(self):
         '''
@@ -277,3 +301,17 @@ class MinJerkPlanner():
             jer_array[i] = self.get_jerk(t_samples[i])
 
         return jer_array
+    
+    def get_snap_array(self):
+        '''
+        return the full snap array
+        '''
+        if self.coeffs == []:
+            self.get_coeffs(self.int_wpts, self.ts)
+
+        t_samples = np.arange(0, sum(self.ts), 0.1)
+        snap_array = np.zeros((t_samples.shape[0], self.D))
+        for i in range(t_samples.shape[0]):
+            snap_array[i] = self.get_snap(t_samples[i])
+
+        return snap_array
