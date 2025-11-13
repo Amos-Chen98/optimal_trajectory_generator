@@ -134,7 +134,7 @@ class MinJerkPlanner():
         if t > sum(self.ts):
             return self.get_pos(sum(self.ts))
 
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         # Locate piece index
@@ -158,7 +158,7 @@ class MinJerkPlanner():
         if t > sum(self.ts):
             return self.get_vel(sum(self.ts))
 
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         # Locate piece index
@@ -182,7 +182,7 @@ class MinJerkPlanner():
         if t > sum(self.ts):
             return self.get_acc(sum(self.ts))
 
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         # Locate piece index
@@ -206,7 +206,7 @@ class MinJerkPlanner():
         if t > sum(self.ts):
             return self.get_jerk(sum(self.ts))
 
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         # Locate piece index
@@ -230,7 +230,7 @@ class MinJerkPlanner():
         if t > sum(self.ts):
             return self.get_snap(sum(self.ts))
 
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         # Locate piece index
@@ -250,7 +250,7 @@ class MinJerkPlanner():
         '''
         return the full pos array
         '''
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         t_samples = np.arange(0, sum(self.ts), 0.1)
@@ -264,7 +264,7 @@ class MinJerkPlanner():
         '''
         return the full vel array
         '''
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         t_samples = np.arange(0, sum(self.ts), 0.1)
@@ -278,7 +278,7 @@ class MinJerkPlanner():
         '''
         return the full acc array
         '''
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         t_samples = np.arange(0, sum(self.ts), 0.1)
@@ -292,7 +292,7 @@ class MinJerkPlanner():
         '''
         return the full jer array
         '''
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         t_samples = np.arange(0, sum(self.ts), 0.1)
@@ -306,7 +306,7 @@ class MinJerkPlanner():
         '''
         return the full snap array
         '''
-        if self.coeffs == []:
+        if not hasattr(self, 'coeffs'):
             self.get_coeffs(self.int_wpts, self.ts)
 
         t_samples = np.arange(0, sum(self.ts), 0.1)
